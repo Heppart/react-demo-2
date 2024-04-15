@@ -1,28 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function Text() {
-  return (
-    <>
-    <h1>привет, странник!</h1>
-    </>
-  );
-}
+const GeoLocation = () => {
+    const [details, setDetails] = useState(null);
 
-function Button() {
-  return(
-  <button>узнать свой ip</button>
-  )
-}
+    const getUserGeolocationDetails = () => {
+        fetch(
+            "https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572"
+        )
+            .then(response => response.json())
+            .then(data => setDetails(data));
+    };
 
-
-export default function App() {
-  return(
-    <>
-    <Text/>
-    <Button/>
-    </>
-
-
-  );
+    return (
+        <>
+                    <h2>привет, странник!</h2>
+                        <button onClick={getUserGeolocationDetails}> узнать свой ip </button>
+                                {details && (
+                                        <p>
+                                            IP: {details.IPv4}
+                                        </p>
+                                )}
+        </>
+    );
 };
+
+export default GeoLocation
